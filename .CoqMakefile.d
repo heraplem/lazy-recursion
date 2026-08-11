@@ -1,0 +1,2 @@
+theories/Clairvoyance.vo theories/Clairvoyance.glob theories/Clairvoyance.v.beautified theories/Clairvoyance.required_vo: theories/Clairvoyance.v /nix/store/ifyavi4i9p878r330i4iif9019724fhx-rocq-9.1.1/lib/rocq-runtime/rocqworker
+theories/Clairvoyance.vos theories/Clairvoyance.vok theories/Clairvoyance.required_vos: theories/Clairvoyance.v /nix/store/ifyavi4i9p878r330i4iif9019724fhx-rocq-9.1.1/lib/rocq-runtime/rocqworker
