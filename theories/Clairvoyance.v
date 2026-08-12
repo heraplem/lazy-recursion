@@ -105,35 +105,23 @@ Inductive cofindE (A : Type) : Type -> Type :=
 | Cofind : nat -> colist A -> cofindE A bool
 .
 
+Import MonadNotation.
+Open Scope monad_scope.
 Definition h_cofind (E : Type -> Type) `{tickE -< E} `{nondetE -< E} `{exceptE no_choice -< E} :
-  cofindE nat ~> itree (cofindE nat +' E).
-  destruct 1.
-  eapply bind. exact tick. intros _.
-  destruct c.
-  - exact (ret false).
-    (* Making the recursive call first is not a natural way to write this
-       function, but it serves as a proof of concept for laziness. *)
-  - eapply bind. exact (thunk (trigger (Cofind n c))). intro bT.
-    destruct (Nat.eqb n n0).
-    + exact (ret true).
-    + apply force. exact bT.
-Defined.
+  cofindE nat ~> itree (cofindE nat +' E) :=
+  fun _ e => match e with
+          | Cofind n c =>
+              tick ;;
+              match c with
+              | conil => ret false
+              | cocons n' c' =>
+                  bT <- thunk (trigger (Cofind n c')) ;;
+                  if (Nat.eqb n n') then ret true else force bT
+              end
+          end
+.
 
-Definition cofind {E} `{tickE -< E} `{nondetE -< E} `{exceptE no_choice -< E} : nat -> colist nat -> itree E bool.
-  intros.
-  eapply mrec.
-  intros.
-  apply h_cofind.
-  - auto.
-  - apply Cofind; auto.
-Defined.
-
-(*
-itree (tickE + nondetE + exceptE no_choice) A
-->
-itree void1 (option (A * nat)) -> Prop
-
-Result (A * nat) -> Prop
-
-itree void1 (option (A * nat) -> Prop)
-*)
+Definition cofind {E} `{tickE -< E} `{nondetE -< E} `{exceptE no_choice -< E}
+  (n : nat) (c : colist nat) : itree E bool :=
+  mrec (fun _ e => h_cofind e) (Cofind n c)
+.
