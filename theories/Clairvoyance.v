@@ -101,10 +101,11 @@ CoInductive colist (A : Type) :=
 | cocons : A -> colist A -> colist A
 .
 
-(* cofindE is an effect representing a recursive call to the cofind function.
-   We introduce it locally, handle it using h_cofind, and then eliminate it
-   using cofind (via mrec).  See "Interaction Trees" for an explanation of this
-   approach; they demonstrate it using the Ackermann function. *)
+(* cofindE is an effect representing a call to the cofind function.  We
+   introduce it locally, handle it using h_cofind, and then eliminate it using
+   cofind (via mrec).  See "Interaction Trees" for an explanation of this
+   approach to representing recursive functions; they demonstrate it using the
+   Ackermann function.  The technique is ultimately due to McBride. *)
 
 Inductive cofindE (A : Type) : Type -> Type :=
 | Cofind : nat -> colist A -> cofindE A bool
