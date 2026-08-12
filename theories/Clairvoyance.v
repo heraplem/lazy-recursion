@@ -10,6 +10,9 @@ Set Maximal Implicit Insertion.
 
 Open Scope type_scope.
 
+(* The following definitions are taken from "Modular, Compositional, and
+   Executable Formal Semantics for LLVM IR". *)
+
 Inductive returns {E A} : itree E A -> A -> Prop :=
 | returns_ret : forall {t a}, eutt eq t (ret a) -> returns t a
 | returns_tau : forall {t a u}, eutt eq t (Tau u) -> returns u a -> returns t a
@@ -20,7 +23,7 @@ Definition propT (E : Type -> Type) (A : Type) : Type :=
   itree E A -> Prop
 .
 
-(* XXX In the bind constructor, the original paper gives k2 type C -> itree E B,
+(* In the bind constructor, the original paper gives k2 the type C -> itree E B,
    but it should certainly be C -> itree F B. *)
 CoInductive interp_prop {A B E F} (R : A -> B -> Prop) (h : E ~> propT F) :
   itree E A -> itree F B -> Prop :=
