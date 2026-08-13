@@ -8,7 +8,7 @@
     gitrees.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = inputs@{ self, flake-parts, ... }: flake-parts.lib.mkFlake { inherit inputs; } {
+  outputs = inputs@{ flake-parts, ... }: flake-parts.lib.mkFlake { inherit inputs; } {
     # NOTE Add systems as tested.
     systems = [ "x86_64-linux" ];
     perSystem = { system, inputs', pkgs, ... }: let
