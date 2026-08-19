@@ -10,8 +10,8 @@ Set Maximal Implicit Insertion.
 
 Open Scope type_scope.
 
-(* The following definitions are taken from "Modular, Compositional, and
-   Executable Formal Semantics for LLVM IR". *)
+(* The following definitions (returns, propT, and interp_prop) are taken from
+   "Modular, Compositional, and Executable Formal Semantics for LLVM IR". *)
 
 Inductive returns {E A} : itree E A -> A -> Prop :=
 | returns_ret : forall {t a}, eutt eq t (ret a) -> returns t a
@@ -102,10 +102,11 @@ CoInductive colist (A : Type) :=
 .
 
 (* cofindE is an effect representing a call to the cofind function.  We
-   introduce it locally, handle it using h_cofind, and then eliminate it using
-   cofind (via mrec).  See "Interaction Trees" for an explanation of this
-   approach to representing recursive functions; they demonstrate it using the
-   Ackermann function.  The technique is ultimately due to McBride. *)
+   introduce it locally and then eliminate it using cofind (via mrec with
+   handler h_cofind).  See "Interaction Trees" for an explanation of this
+   approach to modeling general recursion; they demonstrate it using the
+   Ackermann function.  The technique was first published in
+   "Turing-Completeness Totally Free." *)
 
 Inductive cofindE (A : Type) : Type -> Type :=
 | Cofind : nat -> colist A -> cofindE A bool
