@@ -29,6 +29,7 @@
         packages = [
           coqPkgs.coq
           coqPkgs.ExtLib
+          coqPkgs.paco
           coqPkgs.ITree
           coqPkgs.gitrees
         ];

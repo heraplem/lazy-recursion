@@ -1,2 +1,9 @@
 -R theories Lazy
+theories/Base.v
+theories/WriterFacts.v
+theories/Thunk.v
+theories/ITree.v
+theories/PropM.v
+theories/Events/Fail.v
+theories/Events/Tick.v
 theories/Clairvoyance.v
